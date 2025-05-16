@@ -1,5 +1,6 @@
 emission prediction machine learning
 
+bertujuan untuk mencari model machine learning paling optimal untuk prediksi emisi
 python 
 scikit learn 
 joblib 
