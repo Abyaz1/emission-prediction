@@ -14,7 +14,7 @@ from sklearn.preprocessing import StandardScaler
 
 
 
-# Title dan Deskripsi
+# judul
 st.title("Carbon Footprint Predictor")
 st.markdown("""
 This web predicts the carbon footprint (kg CO₂) based on user activity.
@@ -31,8 +31,6 @@ t = float(st.number_input("Total Transportation Emission", min_value=0, value=10
 r = float(st.number_input("Residential output", min_value=0, value=5))
 
 # Prediksi Jejak Karbon
-# Menggunakan format float dengan titik
-#prediction = -8270.1 + 1 * e + 1 * i + 1 * t + 1 * r
 
 if st.button("Calculate"):
     prediction =  -8.2701 + 1*e + 1*i + 1*t + 1*r
