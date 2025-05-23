@@ -6,11 +6,10 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error
 import matplotlib.pyplot as plt
 
 # --- 1. Pemuatan Data ---
-# Ganti 'nama_file.csv' dengan nama file dataset Anda
-# Ganti 'Nama_Kolom_Tahun' dan 'Nama_Kolom_Emisi' sesuai dengan dataset Anda
+
 file_path = 'thailand_co2_emission_1987_2022.csv'
-column_year = 'year'  # Ganti jika nama kolom tahun berbeda
-column_emission = 'emissions_tons' # Ganti jika nama kolom emisi CO2 berbeda (misal: 'CO2 Emission', 'Emisi')
+column_year = 'year'
+column_emission = 'emissions_tons' 
 
 try:
     df = pd.read_csv(file_path)
@@ -27,7 +26,7 @@ except Exception as e:
     exit()
 
 # --- 2. Pra-pemrosesan Dasar ---
-# Pastikan kolom tahun dan emisi ada
+
 if column_year not in df.columns:
     print(f"Error: Kolom '{column_year}' tidak ditemukan dalam dataset.")
     print(f"Kolom yang tersedia: {df.columns.tolist()}")
@@ -37,8 +36,8 @@ if column_emission not in df.columns:
     print(f"Kolom yang tersedia: {df.columns.tolist()}")
     exit()
 
-# Konversi kolom tahun ke datetime (jika belum) dan jadikan index
-# Asumsi kolom tahun hanya berisi tahun (misal: 1987, 1988)
+# Konversi kolom tahun ke datetime 
+
 try:
     df[column_year] = pd.to_datetime(df[column_year], format='%Y')
 except ValueError:
@@ -63,17 +62,14 @@ data.rename(columns={column_emission: 'CO2_Emission'}, inplace=True) # Standaris
 if data['CO2_Emission'].isnull().any():
     print(f"\nWarning: Ada nilai hilang pada kolom target '{column_emission}'.")
     print("Jumlah nilai hilang:", data['CO2_Emission'].isnull().sum())
-    # Pertimbangkan strategi penanganan missing value (misal: imputasi) sebelum membuat fitur lag
-    # Untuk contoh ini, kita akan lanjutkan, tapi ini bisa mempengaruhi hasil.
-    # data['CO2_Emission'].fillna(method='ffill', inplace=True) # Contoh: forward fill
+   
 
 # --- 3. Feature Engineering (Membuat Fitur Lag) ---
-# Kita akan membuat fitur lag 1 (emisi tahun sebelumnya)
-# Anda bisa menambahkan lebih banyak lag (misal, lag_2, lag_3)
-data['Lag_1'] = data['CO2_Emission'].shift(1)
-# data['Lag_2'] = data['CO2_Emission'].shift(2) # Contoh jika ingin menambah lag_2
 
-# Hapus baris yang memiliki NaN (akibat dari shift/lag)
+data['Lag_1'] = data['CO2_Emission'].shift(1)
+
+
+
 data.dropna(inplace=True)
 
 if data.empty:
@@ -85,9 +81,8 @@ print("\nData setelah feature engineering (dengan fitur lag):")
 print(data.head())
 
 # --- 4. Pembagian Data (Training dan Testing Set) ---
-# Data akan dibagi secara kronologis
-# X adalah fitur (Lag_1), y adalah target (CO2_Emission)
-X = data[['Lag_1']] # Jika ada lebih banyak fitur lag, tambahkan di sini: [['Lag_1', 'Lag_2']]
+
+X = data[['Lag_1']]
 y = data['CO2_Emission']
 
 # Tentukan titik pembagian (misalnya, 80% untuk training, 20% untuk testing)
