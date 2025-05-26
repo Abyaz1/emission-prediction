@@ -1,11 +1,8 @@
-
 import pandas as pd
 import numpy as np
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 import matplotlib.pyplot as plt
-
-
 
 file_path = 'thailand_co2_emission_1987_2022.csv'
 column_year = 'year'
@@ -25,8 +22,6 @@ except Exception as e:
     print(f"Terjadi error saat memuat data: {e}")
     exit()
 
-
-
 if column_year not in df.columns:
     print(f"Error: Kolom '{column_year}' tidak ditemukan dalam dataset.")
     print(f"Kolom yang tersedia: {df.columns.tolist()}")
@@ -37,12 +32,10 @@ if column_emission not in df.columns:
     exit()
 
 # Konversi kolom tahun ke datetime 
-
 try:
     df[column_year] = pd.to_datetime(df[column_year], format='%Y')
 except ValueError:
     print(f"Error: Format tahun pada kolom '{column_year}' tidak sesuai. Harusnya format YYYY (misal: 1990).")
-    
     try:
         df[column_year] = df[column_year].astype(int)
         df[column_year] = pd.to_datetime(df[column_year], format='%Y')
@@ -63,10 +56,8 @@ print(data.head())
 
 X = data[['Lag_1']]
 y = data['CO2_Emission']
-
 split_ratio = 0.8
 split_index = int(len(data) * split_ratio)
-
 X_train, X_test = X.iloc[:split_index], X.iloc[split_index:]
 y_train, y_test = y.iloc[:split_index], y.iloc[split_index:]
 
@@ -105,7 +96,6 @@ plt.plot(y_train.index, y_train, label='Data Training Aktual', color='blue')
 plt.plot(y_test.index, y_test, label='Data Testing Aktual', color='green')
 plt.plot(y_test.index, y_pred_test, label='Prediksi Model pada Data Testing', color='red', linestyle='--')
 # plt.plot(y_train.index, y_pred_train, label='Prediksi Model pada Data Training', color='orange', linestyle=':') # Opsional: plot prediksi training
-
 plt.title('Prediksi Emisi CO2 Thailand vs Data Aktual')
 plt.xlabel('Tahun')
 plt.ylabel('Emisi CO2 (Total)'
