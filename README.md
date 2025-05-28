@@ -5,6 +5,7 @@ python
 scikit learn 
 joblib 
 pandas 
+pickle
 
 train with the dataset with train.py
 insert the model or the coefficient for linear regression to the app
