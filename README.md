@@ -1,4 +1,4 @@
-emission prediction machine learning
+emission prediction with machine learning algorithm
 
 bertujuan untuk mencari model machine learning paling optimal untuk prediksi emisi
 python 
