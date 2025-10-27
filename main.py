@@ -1,8 +1,5 @@
 import streamlit as st
-import pickle
-import numpy as np
 import pandas as pd
-import joblib
 from sklearn.linear_model import LinearRegression
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
@@ -45,4 +42,5 @@ st.markdown("""
 ---
 Made with Streamlit to help raise environmental awareness🌍
 """)
+
 
